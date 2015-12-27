@@ -28,13 +28,15 @@ public class FormController {
         if (result.hasErrors()) {
             pageName = "form";
         } else {
+            redirectAttributes.addFlashAttribute("form", form);
+            redirectAttributes.addFlashAttribute("message","Added successfully.");
             pageName = "redirect:/result";
         }
         return pageName;
     }
 
     @RequestMapping("result")
-    public String result(HttpServletRequest request) {
+    public String result(HttpServletRequest request, @ModelAttribute Form form) {
 
         return "result";
     }

@@ -4,6 +4,7 @@
     <title>Form result</title>
 </head>
 <body>
-    <h1>Form Result</h1>
+<h1>${message}</h1>
+    ${form.field}
 </body>
 </html>
