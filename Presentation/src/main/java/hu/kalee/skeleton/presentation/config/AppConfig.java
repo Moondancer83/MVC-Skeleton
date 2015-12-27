@@ -1,4 +1,4 @@
-package hu.kalee.skeleton.config;
+package hu.kalee.skeleton.presentation.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -16,7 +16,7 @@ import org.springframework.web.servlet.view.JstlView;
  */
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = {"hu.kalee.skeleton.controller"})
+@ComponentScan(basePackages = {"hu.kalee.skeleton.presentation.controller", "hu.kalee.skeleton.business.facade"})
 public class AppConfig {
 
 

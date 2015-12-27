@@ -5,6 +5,6 @@
 </head>
 <body>
 <h1>${message}</h1>
-    ${form.field}
+    ${result.answerDate}
 </body>
 </html>

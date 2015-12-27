@@ -1,4 +1,4 @@
-package hu.kalee.skeleton.config;
+package hu.kalee.skeleton.presentation.config;
 
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
