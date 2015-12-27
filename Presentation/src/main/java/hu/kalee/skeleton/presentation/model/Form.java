@@ -1,9 +1,9 @@
-package hu.kalee.skeleton.model;
+package hu.kalee.skeleton.presentation.model;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
 /**
- * Form model.
+ * Form hu.kalee.skeleton.business.facade.model.
  *
  * @author Moondancer
  * @since 2015.12.26..
