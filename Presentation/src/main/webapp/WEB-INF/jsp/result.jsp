@@ -5,6 +5,7 @@
 </head>
 <body>
 <h1>${message}</h1>
-    ${result.answerDate}
+<p>Data: ${result.field}</p>
+<p>Created at: ${result.answerDate}</p>
 </body>
 </html>

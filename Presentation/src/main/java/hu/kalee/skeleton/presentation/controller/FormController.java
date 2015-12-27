@@ -2,10 +2,12 @@ package hu.kalee.skeleton.presentation.controller;
 
 import hu.kalee.skeleton.business.facade.BusinessFacade;
 import hu.kalee.skeleton.business.model.BusinessInputDTO;
-import hu.kalee.skeleton.business.model.BusinessOutputDTO;
 import hu.kalee.skeleton.business.model.BusinessResult;
 import hu.kalee.skeleton.business.model.ResultStatus;
+import hu.kalee.skeleton.presentation.converter.BusinessToPresentationConverter;
+import hu.kalee.skeleton.presentation.converter.PresentationToBusinessInputConverter;
 import hu.kalee.skeleton.presentation.model.Form;
+import hu.kalee.skeleton.presentation.model.Result;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -27,6 +29,12 @@ public class FormController {
     @Inject
     BusinessFacade facade;
 
+    @Inject
+    PresentationToBusinessInputConverter fromConverter;
+
+    @Inject
+    BusinessToPresentationConverter toConverter;
+
     @RequestMapping("form")
     public String form(HttpServletRequest request,
                        @ModelAttribute @Valid Form form,
@@ -37,11 +45,14 @@ public class FormController {
         if (result.hasErrors()) {
             pageName = "form";
         } else {
-            BusinessInputDTO businessInput = new BusinessInputDTO();
-            businessInput.setData(form.getField());
+            BusinessInputDTO businessInput = fromConverter.convert(form);
             BusinessResult businessResult = facade.process(businessInput);
+
             if (ResultStatus.OK.equals(businessResult.getStatus())) {
-                redirectAttributes.addFlashAttribute("result", businessResult.getOutputDTO());
+                Result formResult = toConverter.convert(businessResult.getOutputDTO());
+                formResult.setField(form.getField());
+
+                redirectAttributes.addFlashAttribute("result", formResult);
                 redirectAttributes.addFlashAttribute("message", businessResult.getMessages().get("message"));
                 pageName = "redirect:/result";
             } else {
@@ -52,7 +63,7 @@ public class FormController {
     }
 
     @RequestMapping("result")
-    public String result(HttpServletRequest request, @ModelAttribute BusinessOutputDTO result) {
+    public String result(HttpServletRequest request, @ModelAttribute Result result) {
 
         return "result";
     }
