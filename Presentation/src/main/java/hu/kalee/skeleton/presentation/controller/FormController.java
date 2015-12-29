@@ -6,12 +6,13 @@ import hu.kalee.skeleton.business.model.BusinessResult;
 import hu.kalee.skeleton.business.model.ResultStatus;
 import hu.kalee.skeleton.presentation.converter.BusinessToPresentationConverter;
 import hu.kalee.skeleton.presentation.converter.PresentationToBusinessInputConverter;
-import hu.kalee.skeleton.presentation.model.Form;
-import hu.kalee.skeleton.presentation.model.Result;
+import hu.kalee.skeleton.presentation.model.FormDTO;
+import hu.kalee.skeleton.presentation.model.ResultDTO;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.inject.Inject;
@@ -35,9 +36,15 @@ public class FormController {
     @Inject
     BusinessToPresentationConverter toConverter;
 
-    @RequestMapping("form")
+
+    @RequestMapping(value = "form", method = RequestMethod.GET)
+    public String form(@ModelAttribute("form") FormDTO form) {
+        return "form";
+    }
+
+    @RequestMapping(value = "form", method = RequestMethod.POST)
     public String form(HttpServletRequest request,
-                       @ModelAttribute @Valid Form form,
+                       @ModelAttribute("form") @Valid FormDTO form,
                        BindingResult result,
                        RedirectAttributes redirectAttributes) {
 
@@ -49,7 +56,7 @@ public class FormController {
             BusinessResult businessResult = facade.process(businessInput);
 
             if (ResultStatus.OK.equals(businessResult.getStatus())) {
-                Result formResult = toConverter.convert(businessResult.getOutputDTO());
+                ResultDTO formResult = toConverter.convert(businessResult.getOutputDTO());
                 formResult.setField(form.getField());
 
                 redirectAttributes.addFlashAttribute("result", formResult);
@@ -63,7 +70,7 @@ public class FormController {
     }
 
     @RequestMapping("result")
-    public String result(HttpServletRequest request, @ModelAttribute Result result) {
+    public String result(HttpServletRequest request, @ModelAttribute ResultDTO result) {
 
         return "result";
     }

@@ -1,7 +1,7 @@
 package hu.kalee.skeleton.presentation.converter;
 
 import hu.kalee.skeleton.business.model.BusinessOutputDTO;
-import hu.kalee.skeleton.presentation.model.Result;
+import hu.kalee.skeleton.presentation.model.ResultDTO;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
@@ -10,10 +10,10 @@ import org.springframework.stereotype.Component;
  * @since 2015.12.23..
  */
 @Component
-public class BusinessToPresentationConverter implements Converter<BusinessOutputDTO, Result> {
+public class BusinessToPresentationConverter implements Converter<BusinessOutputDTO, ResultDTO> {
     @Override
-    public Result convert(BusinessOutputDTO toConvert) {
-        Result result = new Result();
+    public ResultDTO convert(BusinessOutputDTO toConvert) {
+        ResultDTO result = new ResultDTO();
         result.setAnswerDate(toConvert.getAnswerDate());
 
         return result;
