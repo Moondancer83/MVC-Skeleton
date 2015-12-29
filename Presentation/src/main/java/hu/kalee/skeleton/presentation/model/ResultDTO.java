@@ -6,7 +6,7 @@ import java.util.Date;
  * @author Moondancer
  * @since 2015.12.23..
  */
-public class Result {
+public class ResultDTO {
     private Date answerDate;
     private String field;
 
