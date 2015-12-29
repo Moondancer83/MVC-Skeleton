@@ -11,5 +11,8 @@
 
         <input type="submit" value="Submit" />
     </form>
+<footer>
+    <p><a href="${pageContext.request.contextPath}/home">Back to Home</a> </p>
+</footer>
 </body>
 </html>

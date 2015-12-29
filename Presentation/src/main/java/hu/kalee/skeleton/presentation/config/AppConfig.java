@@ -16,7 +16,7 @@ import org.springframework.web.servlet.view.JstlView;
  */
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = {"hu.kalee.skeleton.presentation.controller", "hu.kalee.skeleton.business.facade"})
+@ComponentScan(basePackages = {"hu.kalee.skeleton.presentation.controller", "hu.kalee.skeleton.presentation.converter", "hu.kalee.skeleton.business.facade"})
 public class AppConfig {
 
 
