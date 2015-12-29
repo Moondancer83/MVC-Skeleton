@@ -18,7 +18,7 @@ public class FormDTO {
     private String field;
 
     public FormDTO() {
-        warnings = new ArrayList<>();
+        warnings = new ArrayList<String>();
     }
 
     public List<String> getWarnings() {
