@@ -14,6 +14,37 @@ import org.springframework.stereotype.Service;
 public class DefaultBusinessFacade implements BusinessFacade {
     @Override
     public BusinessResult process(BusinessInputDTO input) {
+        BusinessResult result;
+        if ("0000".equals(input.getData())) {
+            result = getErrorResult();
+        } else if ("0001".equals(input.getData())) {
+            result = getWarningResult();
+        } else {
+            result = getOkResult();
+        }
+        return result;
+    }
+
+    private BusinessResult getWarningResult() {
+        BusinessResult result = new BusinessResult();
+        result.setStatus(ResultStatus.WARNING);
+        result.setOutputDTO(new BusinessOutputDTO());
+        result.addMessage("message", "Warning");
+        result.addMessage("warning", "No match found.");
+
+        return result;
+    }
+
+    private BusinessResult getErrorResult() {
+        BusinessResult result = new BusinessResult();
+        result.setStatus(ResultStatus.ERROR);
+        result.setOutputDTO(new BusinessOutputDTO());
+        result.addMessage("message", "System crash...");
+
+        return result;
+    }
+
+    private BusinessResult getOkResult() {
         BusinessResult result = new BusinessResult();
         result.setStatus(ResultStatus.OK);
         result.setOutputDTO(new BusinessOutputDTO());

@@ -3,7 +3,6 @@ package hu.kalee.skeleton.presentation.controller;
 import hu.kalee.skeleton.business.facade.BusinessFacade;
 import hu.kalee.skeleton.business.model.BusinessInputDTO;
 import hu.kalee.skeleton.business.model.BusinessResult;
-import hu.kalee.skeleton.business.model.ResultStatus;
 import hu.kalee.skeleton.presentation.converter.BusinessToPresentationConverter;
 import hu.kalee.skeleton.presentation.converter.PresentationToBusinessInputConverter;
 import hu.kalee.skeleton.presentation.model.FormDTO;
@@ -55,15 +54,24 @@ public class FormController {
             BusinessInputDTO businessInput = fromConverter.convert(form);
             BusinessResult businessResult = facade.process(businessInput);
 
-            if (ResultStatus.OK.equals(businessResult.getStatus())) {
-                ResultDTO formResult = toConverter.convert(businessResult.getOutputDTO());
-                formResult.setField(form.getField());
+            switch (businessResult.getStatus()) {
+                case OK:
+                    ResultDTO formResult = toConverter.convert(businessResult.getOutputDTO());
+                    formResult.setField(form.getField());
 
-                redirectAttributes.addFlashAttribute("result", formResult);
-                redirectAttributes.addFlashAttribute("message", businessResult.getMessages().get("message"));
-                pageName = "redirect:/result";
-            } else {
-                pageName = "form";
+                    redirectAttributes.addFlashAttribute("result", formResult);
+                    redirectAttributes.addFlashAttribute("message", businessResult.getMessages().get("message"));
+                    pageName = "redirect:/result";
+                    break;
+                case ERROR:
+                    redirectAttributes.addFlashAttribute("message", businessResult.getMessages().get("message"));
+                    pageName = "redirect:/error";
+                    break;
+                case WARNING:
+                default:
+                    form.addWarning(businessResult.getMessages().get("warning"));
+                    pageName = "form";
+                    break;
             }
         }
         return pageName;
