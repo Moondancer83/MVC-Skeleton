@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class PresentationToBusinessInputConverter implements Converter<FormDTO, BusinessInputDTO> {
     @Override
-    public BusinessInputDTO convert(FormDTO toConvert) {
+    public BusinessInputDTO convert(final FormDTO toConvert) {
         BusinessInputDTO result = new BusinessInputDTO();
         result.setData(toConvert.getField());
 

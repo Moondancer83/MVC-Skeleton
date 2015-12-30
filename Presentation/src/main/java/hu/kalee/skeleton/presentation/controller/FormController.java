@@ -30,11 +30,20 @@ public class FormController extends BaseController<FormDTO, BusinessInputDTO, Bu
     public static final String CALLING_VIEW_NAME = "form";
     public static final String OK_VIEW_NAME = "redirect:/result";
 
+    /**
+     * Business Facade dependency.
+     */
     @Inject
-    BusinessFacade facade;
+    private BusinessFacade facade;
 
+    /**
+     * Controller for dependency injection.
+     *
+     * @param toBusinessConverter     Presentation to business converter for input DTO
+     * @param toPresentationConverter Business to presentation converter for output DTO
+     */
     @Inject
-    public FormController(Converter<FormDTO, BusinessInputDTO> toBusinessConverter, Converter<BusinessOutputDTO, ResultDTO> toPresentationConverter) {
+    public FormController(final Converter<FormDTO, BusinessInputDTO> toBusinessConverter, final Converter<BusinessOutputDTO, ResultDTO> toPresentationConverter) {
         super(toBusinessConverter, toPresentationConverter);
     }
 
@@ -45,7 +54,7 @@ public class FormController extends BaseController<FormDTO, BusinessInputDTO, Bu
      * @return The name of calling view view
      */
     @RequestMapping(value = CALLING_URL, method = RequestMethod.GET)
-    public String form(@ModelAttribute("form") FormDTO form) {
+    public final String form(@ModelAttribute("form") final FormDTO form) {
         return CALLING_VIEW_NAME;
     }
 
@@ -60,36 +69,36 @@ public class FormController extends BaseController<FormDTO, BusinessInputDTO, Bu
      * @return The name of next view.
      */
     @RequestMapping(value = CALLING_URL, method = RequestMethod.POST)
-    public String form(HttpServletRequest request,
-                       @ModelAttribute("form") @Valid FormDTO form,
-                       BindingResult result,
-                       RedirectAttributes redirectAttributes) {
+    public final String form(final HttpServletRequest request,
+                             @ModelAttribute("form") @Valid final FormDTO form,
+                             final BindingResult result,
+                             final RedirectAttributes redirectAttributes) {
 
         return process(form, result, redirectAttributes);
     }
 
     @Override
-    String getCallingViewName() {
+    final String getCallingViewName() {
         return CALLING_VIEW_NAME;
     }
 
     @Override
-    String getOkViewName() {
+    final String getOkViewName() {
         return OK_VIEW_NAME;
     }
 
     @Override
-    void preProcessInput(BusinessInputDTO businessInput) {
+    void preProcessInput(final BusinessInputDTO businessInput) {
 
     }
 
     @Override
-    void postProcessResult(FormDTO input, ResultDTO serviceResult) {
+    final void postProcessResult(final FormDTO input, final ResultDTO serviceResult) {
         serviceResult.setField(input.getField());
     }
 
     @Override
-    BusinessResult callFacade(BusinessInputDTO businessInput) {
+    final BusinessResult callFacade(final BusinessInputDTO businessInput) {
         return facade.process(businessInput);
     }
 }

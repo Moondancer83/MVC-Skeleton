@@ -15,8 +15,15 @@ import javax.servlet.http.HttpServletRequest;
  */
 @Controller
 public class ResultController {
+    /**
+     * Result page.
+     *
+     * @param request HTTP request object
+     * @param result  Output DTO
+     * @return The name of view
+     */
     @RequestMapping("result")
-    public String result(HttpServletRequest request, @ModelAttribute ResultDTO result) {
+    public final String result(final HttpServletRequest request, @ModelAttribute final ResultDTO result) {
 
         return "result";
     }

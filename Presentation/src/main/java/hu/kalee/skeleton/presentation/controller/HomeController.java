@@ -11,8 +11,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 public class HomeController {
+    /**
+     * Home page.
+     *
+     * @return The name of home page view
+     */
     @RequestMapping("home")
-    public String home() {
+    public final String home() {
         return "home";
     }
 }

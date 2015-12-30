@@ -12,19 +12,19 @@ public class ResultDTO implements OutputDTO {
     private Date answerDate;
     private String field;
 
-    public void setAnswerDate(Date answerDate) {
-        this.answerDate = answerDate;
-    }
-
     public Date getAnswerDate() {
         return answerDate;
     }
 
-    public void setField(String field) {
-        this.field = field;
+    public void setAnswerDate(final Date answerDate) {
+        this.answerDate = answerDate;
     }
 
     public String getField() {
         return field;
+    }
+
+    public void setField(final String field) {
+        this.field = field;
     }
 }

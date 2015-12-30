@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class BusinessToPresentationConverter implements Converter<BusinessOutputDTO, ResultDTO> {
     @Override
-    public ResultDTO convert(BusinessOutputDTO toConvert) {
+    public ResultDTO convert(final BusinessOutputDTO toConvert) {
         ResultDTO result = new ResultDTO();
         result.setAnswerDate(toConvert.getAnswerDate());
 

@@ -28,7 +28,7 @@ public class FormDTO implements InputDTO, MessageHolder {
     }
 
     @Override
-    public void addMessage(String key, String message) {
+    public void addMessage(final String key, final String message) {
         messages.put(key, message);
     }
 
@@ -38,7 +38,7 @@ public class FormDTO implements InputDTO, MessageHolder {
         return field;
     }
 
-    public void setField(String field) {
+    public void setField(final String field) {
         this.field = field;
     }
 }
