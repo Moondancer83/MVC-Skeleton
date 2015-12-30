@@ -1,12 +1,14 @@
 package hu.kalee.skeleton.presentation.model;
 
+import hu.kalee.skeleton.business.model.OutputDTO;
+
 import java.util.Date;
 
 /**
  * @author Moondancer
  * @since 2015.12.23..
  */
-public class ResultDTO {
+public class ResultDTO implements OutputDTO {
     private Date answerDate;
     private String field;
 

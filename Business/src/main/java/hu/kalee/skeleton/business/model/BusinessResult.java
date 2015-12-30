@@ -9,7 +9,7 @@ import java.util.Map;
  */
 public class BusinessResult {
     private ResultStatus status;
-    private BusinessOutputDTO outputDTO;
+    private OutputDTO outputDTO;
     private Map<String, String> messages;
 
     public BusinessResult() {
@@ -26,11 +26,11 @@ public class BusinessResult {
         this.status = status;
     }
 
-    public BusinessOutputDTO getOutputDTO() {
+    public OutputDTO getOutputDTO() {
         return outputDTO;
     }
 
-    public void setOutputDTO(BusinessOutputDTO outputDTO) {
+    public void setOutputDTO(OutputDTO outputDTO) {
         this.outputDTO = outputDTO;
     }
 

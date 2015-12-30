@@ -1,10 +1,11 @@
 package hu.kalee.skeleton.presentation.model;
 
+import hu.kalee.skeleton.business.model.InputDTO;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.validation.constraints.Pattern;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Form hu.kalee.skeleton.business.facade.model.
@@ -12,25 +13,23 @@ import java.util.List;
  * @author Moondancer
  * @since 2015.12.26..
  */
-public class FormDTO {
-    private List<String> warnings;
+public class FormDTO implements InputDTO, MessageHolder {
+    private Map<String, String> messages;
 
     private String field;
 
     public FormDTO() {
-        warnings = new ArrayList<String>();
+        messages = new HashMap<String, String>();
     }
 
-    public List<String> getWarnings() {
-        return warnings;
+    @Override
+    public Map<String, String> getMessages() {
+        return messages;
     }
 
-    public void setWarnings(List<String> warnings) {
-        this.warnings = warnings;
-    }
-
-    public void addWarning(String warning) {
-        warnings.add(warning);
+    @Override
+    public void addMessage(String key, String message) {
+        messages.put(key, message);
     }
 
     @NotEmpty
