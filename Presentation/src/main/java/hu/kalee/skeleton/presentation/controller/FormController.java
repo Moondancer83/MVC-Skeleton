@@ -4,8 +4,6 @@ import hu.kalee.skeleton.business.facade.BusinessFacade;
 import hu.kalee.skeleton.business.model.BusinessInputDTO;
 import hu.kalee.skeleton.business.model.BusinessOutputDTO;
 import hu.kalee.skeleton.business.model.BusinessResult;
-import hu.kalee.skeleton.presentation.converter.BusinessToPresentationConverter;
-import hu.kalee.skeleton.presentation.converter.PresentationToBusinessInputConverter;
 import hu.kalee.skeleton.presentation.model.FormDTO;
 import hu.kalee.skeleton.presentation.model.ResultDTO;
 import org.springframework.core.convert.converter.Converter;
@@ -31,16 +29,9 @@ public class FormController extends BaseController<FormDTO, BusinessInputDTO, Bu
     public static final String CALLING_URL = "form";
     public static final String CALLING_VIEW_NAME = "form";
     public static final String OK_VIEW_NAME = "redirect:/result";
-    public static final String ERROR_VIEW_NAME = "redirect:/error";
-    public static final String OK_URL = "result";
+
     @Inject
     BusinessFacade facade;
-
-    @Inject
-    PresentationToBusinessInputConverter fromConverter;
-
-    @Inject
-    BusinessToPresentationConverter toPresentationConverter;
 
     @Inject
     public FormController(Converter<FormDTO, BusinessInputDTO> toBusinessConverter, Converter<BusinessOutputDTO, ResultDTO> toPresentationConverter) {

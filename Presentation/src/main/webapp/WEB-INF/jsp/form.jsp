@@ -8,7 +8,8 @@
         .error {
             color: red;
         }
-        .messsages {
+
+        .warning {
             color: orange;
         }
     </style>
@@ -19,9 +20,9 @@
             <tr>
                 <td></td>
                 <td>
-                    <ul class="messages">
+                    <ul>
                     <c:forEach items="${form.messages}" var="message">
-                        <li>${message}</li>
+                        <li class="warning">${message}</li>
                     </c:forEach>
                     </ul>
                 </td>
