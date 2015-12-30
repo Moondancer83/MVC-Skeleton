@@ -19,6 +19,8 @@ public class DefaultBusinessFacade implements BusinessFacade {
             result = getErrorResult();
         } else if ("0001".equals(input.getData())) {
             result = getWarningResult();
+        } else if ("0666".equals(input.getData())) {
+            throw new IllegalStateException("Something went wrong.");
         } else {
             result = getOkResult();
         }

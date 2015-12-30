@@ -33,30 +33,35 @@ public abstract class BaseController<A extends InputDTO & MessageHolder, B exten
         if (result.hasErrors()) {
             viewName = getCallingViewName();
         } else {
-            B businessInput = toBusinessConverter.convert(input);
-            preProcessInput(businessInput);
-            BusinessResult businessResult = callFacade(businessInput);
+            try {
+                B businessInput = toBusinessConverter.convert(input);
+                preProcessInput(businessInput);
+                BusinessResult businessResult = callFacade(businessInput);
 
-            switch (businessResult.getStatus()) {
-                case OK:
-                    @SuppressWarnings("unchecked")
-                    C businessOutputDTO = (C) businessResult.getOutputDTO();
-                    D serviceResult = toPresentationConverter.convert(businessOutputDTO);
-                    postProcessResult(input, serviceResult);
+                switch (businessResult.getStatus()) {
+                    case OK:
+                        @SuppressWarnings("unchecked")
+                        C businessOutputDTO = (C) businessResult.getOutputDTO();
+                        D serviceResult = toPresentationConverter.convert(businessOutputDTO);
+                        postProcessResult(input, serviceResult);
 
-                    redirectAttributes.addFlashAttribute("result", serviceResult);
-                    redirectAttributes.addFlashAttribute("message", businessResult.getMessages().get("message"));
-                    viewName = getOkViewName();
-                    break;
-                case ERROR:
-                    redirectAttributes.addFlashAttribute("message", businessResult.getMessages().get("message"));
-                    viewName = ERROR_VIEW_NAME;
-                    break;
-                case WARNING:
-                default:
-                    input.addMessage("warning", businessResult.getMessages().get("warning"));
-                    viewName = getCallingViewName();
-                    break;
+                        redirectAttributes.addFlashAttribute("result", serviceResult);
+                        redirectAttributes.addFlashAttribute("message", businessResult.getMessages().get("message"));
+                        viewName = getOkViewName();
+                        break;
+                    case ERROR:
+                        redirectAttributes.addFlashAttribute("message", businessResult.getMessages().get("message"));
+                        viewName = ERROR_VIEW_NAME;
+                        break;
+                    case WARNING:
+                    default:
+                        input.addMessage("warning", businessResult.getMessages().get("warning"));
+                        viewName = getCallingViewName();
+                        break;
+                }
+            } catch (Exception e) {
+                redirectAttributes.addFlashAttribute("message", e.getMessage());
+                viewName = ERROR_VIEW_NAME;
             }
         }
 
