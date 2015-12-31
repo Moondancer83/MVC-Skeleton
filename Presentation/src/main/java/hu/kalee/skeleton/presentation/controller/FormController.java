@@ -2,11 +2,11 @@ package hu.kalee.skeleton.presentation.controller;
 
 import hu.kalee.skeleton.business.facade.BusinessFacade;
 import hu.kalee.skeleton.business.model.BusinessInputDTO;
+import hu.kalee.skeleton.business.model.BusinessOutputDTO;
 import hu.kalee.skeleton.business.model.BusinessResult;
-import hu.kalee.skeleton.presentation.converter.BusinessToPresentationConverter;
-import hu.kalee.skeleton.presentation.converter.PresentationToBusinessInputConverter;
 import hu.kalee.skeleton.presentation.model.FormDTO;
 import hu.kalee.skeleton.presentation.model.ResultDTO;
+import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -25,61 +25,80 @@ import javax.validation.Valid;
  * @since 2015.12.23..
  */
 @Controller
-public class FormController {
+public class FormController extends BaseController<FormDTO, BusinessInputDTO, BusinessOutputDTO, ResultDTO> {
+    public static final String CALLING_URL = "form";
+    public static final String CALLING_VIEW_NAME = "form";
+    public static final String OK_VIEW_NAME = "result";
+
+    /**
+     * Business Facade dependency.
+     */
     @Inject
-    BusinessFacade facade;
+    private BusinessFacade facade;
 
+    /**
+     * Controller for dependency injection.
+     *
+     * @param toBusinessConverter     Presentation to business converter for input DTO
+     * @param toPresentationConverter Business to presentation converter for output DTO
+     */
     @Inject
-    PresentationToBusinessInputConverter fromConverter;
-
-    @Inject
-    BusinessToPresentationConverter toConverter;
-
-
-    @RequestMapping(value = "form", method = RequestMethod.GET)
-    public String form(@ModelAttribute("form") FormDTO form) {
-        return "form";
+    public FormController(final Converter<FormDTO, BusinessInputDTO> toBusinessConverter, final Converter<BusinessOutputDTO, ResultDTO> toPresentationConverter) {
+        super(toBusinessConverter, toPresentationConverter);
     }
 
-    @RequestMapping(value = "form", method = RequestMethod.POST)
-    public String form(HttpServletRequest request,
-                       @ModelAttribute("form") @Valid FormDTO form,
-                       BindingResult result,
-                       RedirectAttributes redirectAttributes) {
-
-        String pageName;
-        if (result.hasErrors()) {
-            pageName = "form";
-        } else {
-            BusinessInputDTO businessInput = fromConverter.convert(form);
-            BusinessResult businessResult = facade.process(businessInput);
-
-            switch (businessResult.getStatus()) {
-                case OK:
-                    ResultDTO formResult = toConverter.convert(businessResult.getOutputDTO());
-                    formResult.setField(form.getField());
-
-                    redirectAttributes.addFlashAttribute("result", formResult);
-                    redirectAttributes.addFlashAttribute("message", businessResult.getMessages().get("message"));
-                    pageName = "redirect:/result";
-                    break;
-                case ERROR:
-                    redirectAttributes.addFlashAttribute("message", businessResult.getMessages().get("message"));
-                    pageName = "redirect:/error";
-                    break;
-                case WARNING:
-                default:
-                    form.addWarning(businessResult.getMessages().get("warning"));
-                    pageName = "form";
-                    break;
-            }
-        }
-        return pageName;
+    /**
+     * Loads Calling View after GET request.
+     *
+     * @param form The input model
+     * @return The name of calling view view
+     */
+    @RequestMapping(value = CALLING_URL, method = RequestMethod.GET)
+    public final String form(@ModelAttribute("form") final FormDTO form) {
+        return CALLING_VIEW_NAME;
     }
 
-    @RequestMapping("result")
-    public String result(HttpServletRequest request, @ModelAttribute ResultDTO result) {
+    /**
+     * Processes POST request.
+     * Validation warnings, Error or Result.
+     *
+     * @param request The HTTP Request object
+     * @param form The input object
+     * @param result The validation result
+     * @param redirectAttributes The redirect attribures object
+     * @return The name of next view.
+     */
+    @RequestMapping(value = CALLING_URL, method = RequestMethod.POST)
+    public final String form(final HttpServletRequest request,
+                             @ModelAttribute("form") @Valid final FormDTO form,
+                             final BindingResult result,
+                             final RedirectAttributes redirectAttributes) {
 
-        return "result";
+        return process(form, result, redirectAttributes);
+    }
+
+    @Override
+    final String getCallingViewName() {
+        return CALLING_VIEW_NAME;
+    }
+
+    @Override
+    final String getOkViewName() {
+        return OK_VIEW_NAME;
+    }
+
+    @Override
+    void preProcessInput(final BusinessInputDTO businessInput) {
+
+    }
+
+    @Override
+    final void postProcessResult(final FormDTO input, final ResultDTO serviceResult) {
+        serviceResult.setField(input.getField());
+    }
+
+    @Override
+    final BusinessResult callFacade(final BusinessInputDTO businessInput) {
+        return facade.process(businessInput);
     }
 }
