@@ -28,7 +28,7 @@ import javax.validation.Valid;
 public class FormController extends BaseController<FormDTO, BusinessInputDTO, BusinessOutputDTO, ResultDTO> {
     public static final String CALLING_URL = "form";
     public static final String CALLING_VIEW_NAME = "form";
-    public static final String OK_VIEW_NAME = "redirect:/result";
+    public static final String OK_VIEW_NAME = "result";
 
     /**
      * Business Facade dependency.

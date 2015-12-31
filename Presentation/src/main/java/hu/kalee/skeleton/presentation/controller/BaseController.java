@@ -20,7 +20,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
  * @param <D> Output DTO for frontend usage
  */
 public abstract class BaseController<A extends InputDTO & MessageHolder, B extends InputDTO, C extends OutputDTO, D extends OutputDTO> {
-    public static final String ERROR_VIEW_NAME = "redirect:/error";
+    public static final String REDIRECT_PREFIX = "redirect:/";
+    public static final String ERROR_VIEW_NAME = "error";
 
     private final Converter<A, B> toBusinessConverter;
     private final Converter<C, D> toPresentationConverter;
@@ -62,11 +63,11 @@ public abstract class BaseController<A extends InputDTO & MessageHolder, B exten
 
                         redirectAttributes.addFlashAttribute("result", serviceResult);
                         redirectAttributes.addFlashAttribute("message", businessResult.getMessages().get("message"));
-                        viewName = getOkViewName();
+                        viewName = REDIRECT_PREFIX + getOkViewName();
                         break;
                     case ERROR:
                         redirectAttributes.addFlashAttribute("message", businessResult.getMessages().get("message"));
-                        viewName = ERROR_VIEW_NAME;
+                        viewName = REDIRECT_PREFIX + ERROR_VIEW_NAME;
                         break;
                     case WARNING:
                     default:
@@ -76,7 +77,7 @@ public abstract class BaseController<A extends InputDTO & MessageHolder, B exten
                 }
             } catch (Exception e) {
                 redirectAttributes.addFlashAttribute("message", e.getMessage());
-                viewName = ERROR_VIEW_NAME;
+                viewName = REDIRECT_PREFIX + ERROR_VIEW_NAME;
             }
         }
 
