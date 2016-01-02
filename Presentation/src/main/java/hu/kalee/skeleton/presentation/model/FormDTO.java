@@ -1,6 +1,6 @@
 package hu.kalee.skeleton.presentation.model;
 
-import hu.kalee.skeleton.business.model.InputDTO;
+import hu.kalee.skeleton.backend.model.InputDTO;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.validation.constraints.Pattern;
@@ -13,7 +13,7 @@ import java.util.Map;
  * @author Moondancer
  * @since 2015.12.26..
  */
-public class FormDTO implements InputDTO, MessageHolder {
+public class FormDTO implements MessageHolder, InputDTO {
     private Map<String, String> messages;
 
     private String field;
