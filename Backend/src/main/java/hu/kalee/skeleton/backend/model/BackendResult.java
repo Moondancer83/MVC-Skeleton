@@ -11,7 +11,7 @@ import java.util.Map;
  */
 public class BackendResult implements MessageHolder {
     private ResultStatus status;
-    private BackendOutputDTO dto;
+    private OutputDTO dto;
     private Map<String, String> messages;
 
     public BackendResult() {
@@ -26,11 +26,11 @@ public class BackendResult implements MessageHolder {
         this.status = status;
     }
 
-    public BackendOutputDTO getDto() {
+    public OutputDTO getDto() {
         return dto;
     }
 
-    public void setDto(BackendOutputDTO dto) {
+    public void setDto(OutputDTO dto) {
         this.dto = dto;
     }
 

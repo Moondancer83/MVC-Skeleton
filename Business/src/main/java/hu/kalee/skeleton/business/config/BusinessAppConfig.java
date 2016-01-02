@@ -16,7 +16,7 @@ import org.springframework.context.annotation.Configuration;
 @ComponentScan(basePackages = {"hu.kalee.skeleton.business", "hu.kalee.skeleton.backend.service"})
 public class BusinessAppConfig {
     @Bean
-    public final Mapper mapper() {
+    public Mapper mapper() {
         return new DozerBeanMapper();
     }
 }

@@ -8,5 +8,11 @@ import hu.kalee.skeleton.business.model.BusinessResult;
  * @since  2015.12.27..
  */
 public interface BusinessFacade {
-    BusinessResult process(BusinessInputDTO input);
+    /**
+     * Entry point.
+     *
+     * @param input The input
+     * @return The result
+     */
+    BusinessResult form(BusinessInputDTO input);
 }
