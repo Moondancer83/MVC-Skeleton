@@ -9,9 +9,9 @@
     <packaging>pom</packaging>
     <version>0.1.0-SNAPSHOT</version>
     <modules>
-        <module>Presentation</module>
-        <module>Business</module>
         <module>Backend</module>
+        <module>Business</module>
+        <module>Presentation</module>
     </modules>
     <name>Spring MVC Skeleton</name>
 
@@ -67,6 +67,12 @@
                 <artifactId>assertj-core</artifactId>
                 <version>3.2.0</version>
                 <scope>test</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-all</artifactId>
+                <version>1.10.19</version>
             </dependency>
 
             <dependency>
@@ -150,6 +156,11 @@
         <dependency>
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-all</artifactId>
         </dependency>
 
     </dependencies>
