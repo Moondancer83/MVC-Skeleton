@@ -1,12 +1,13 @@
 package hu.kalee.skeleton.business.facade;
 
+import hu.kalee.skeleton.backend.model.BackendInputDTO;
+import hu.kalee.skeleton.backend.model.BackendOutputDTO;
 import hu.kalee.skeleton.backend.model.BackendResult;
-import hu.kalee.skeleton.backend.model.ResultStatus;
 import hu.kalee.skeleton.backend.service.MockService;
-import hu.kalee.skeleton.business.converter.InputBusinessToBackendConverter;
-import hu.kalee.skeleton.business.converter.OutputBackendToBusinessConverter;
 import hu.kalee.skeleton.business.model.BusinessInputDTO;
+import hu.kalee.skeleton.business.model.BusinessOutputDTO;
 import hu.kalee.skeleton.business.model.BusinessResult;
+import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
@@ -16,27 +17,34 @@ import javax.inject.Inject;
  * @since  2015.12.27..
  */
 @Service
-public class DefaultBusinessFacade implements BusinessFacade {
+public class DefaultBusinessFacade extends AbstractBusinessFacade<BusinessInputDTO, BackendInputDTO, BackendOutputDTO, BusinessOutputDTO> implements BusinessFacade {
     @Inject
     private MockService service;
-    @Inject
-    private InputBusinessToBackendConverter toBackendConverter;
-    @Inject
-    private OutputBackendToBusinessConverter toBusinessConverter;
 
+    @Inject
+    public DefaultBusinessFacade(final Converter<BusinessInputDTO, BackendInputDTO> toBackendConverter, final Converter<BackendOutputDTO, BusinessOutputDTO> toBusinessConverter) {
+        super(toBackendConverter, toBusinessConverter);
+    }
+
+    /**
+     * Entry point.
+     *
+     * @param input The input
+     * @return The result
+     */
     @Override
-    public BusinessResult process(final BusinessInputDTO input) {
-        BusinessResult result = new BusinessResult();
-        try {
-            BackendResult backendResult = service.call(toBackendConverter.convert(input));
-            result.setOutputDTO(toBusinessConverter.convert(backendResult.getDto()));
-            result.setStatus(backendResult.getStatus());
-            result.setMessages(backendResult.getMessages());
-        } catch (Exception e) {
-            result.setStatus(ResultStatus.ERROR);
-            result.addMessage("message", e.getMessage());
-        }
+    public BusinessResult form(final BusinessInputDTO input) {
+        return super.process(input);
+    }
 
-        return result;
+    /**
+     * Method from AbstractFacade.
+     *
+     * @param backendInput The backend formatted input
+     * @return The backend result
+     */
+    @Override
+    BackendResult callService(final BackendInputDTO backendInput) {
+        return service.call(backendInput);
     }
 }

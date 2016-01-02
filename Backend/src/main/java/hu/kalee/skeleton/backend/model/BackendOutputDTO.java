@@ -8,7 +8,7 @@ import java.util.Date;
  * @author Moondancer
  * @since 2015.12.30..
  */
-public class BackendOutputDTO {
+public class BackendOutputDTO implements OutputDTO {
     private Date created;
 
     public Date getCreated() {

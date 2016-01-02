@@ -1,6 +1,6 @@
 package hu.kalee.skeleton.presentation.model;
 
-import hu.kalee.skeleton.business.model.OutputDTO;
+import hu.kalee.skeleton.backend.model.OutputDTO;
 
 import java.util.Date;
 

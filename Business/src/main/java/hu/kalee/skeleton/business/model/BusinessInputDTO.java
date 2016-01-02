@@ -1,5 +1,7 @@
 package hu.kalee.skeleton.business.model;
 
+import hu.kalee.skeleton.backend.model.InputDTO;
+
 /**
  * @author Moondancer
  * @since  2015.12.27..

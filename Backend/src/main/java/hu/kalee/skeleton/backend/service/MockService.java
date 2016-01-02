@@ -70,7 +70,7 @@ public class MockService {
         BackendResult result = new BackendResult();
         result.setStatus(ResultStatus.OK);
         result.setDto(new BackendOutputDTO());
-        result.getDto().setCreated(new Date());
+        ((BackendOutputDTO) result.getDto()).setCreated(new Date());
         result.addMessage("message", "Success!");
 
         return result;

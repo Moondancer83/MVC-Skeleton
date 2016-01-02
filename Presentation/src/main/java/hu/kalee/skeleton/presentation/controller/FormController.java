@@ -99,6 +99,6 @@ public class FormController extends BaseController<FormDTO, BusinessInputDTO, Bu
 
     @Override
     final BusinessResult callFacade(final BusinessInputDTO businessInput) {
-        return facade.process(businessInput);
+        return facade.form(businessInput);
     }
 }

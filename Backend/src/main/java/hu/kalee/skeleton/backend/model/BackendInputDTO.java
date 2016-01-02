@@ -6,7 +6,7 @@ package hu.kalee.skeleton.backend.model;
  * @author Moondancer
  * @since 2015.12.31..
  */
-public class BackendInputDTO {
+public class BackendInputDTO implements InputDTO {
     private int data;
 
     public int getData() {
