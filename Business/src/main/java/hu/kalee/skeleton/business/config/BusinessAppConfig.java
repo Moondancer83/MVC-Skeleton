@@ -5,7 +5,6 @@ import org.dozer.Mapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 /**
  * Base application configuration.
@@ -14,11 +13,10 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
  * @since 2015.12.27..
  */
 @Configuration
-@EnableWebMvc
-@ComponentScan(basePackages = {"hu.kalee.skeleton.business"})
-public class AppConfig {
+@ComponentScan(basePackages = {"hu.kalee.skeleton.business", "hu.kalee.skeleton.backend.service"})
+public class BusinessAppConfig {
     @Bean
-    public Mapper mapper() {
+    public final Mapper mapper() {
         return new DozerBeanMapper();
     }
 }
