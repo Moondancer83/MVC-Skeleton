@@ -4,7 +4,7 @@ import hu.kalee.skeleton.backend.model.BackendInputDTO;
 import hu.kalee.skeleton.backend.model.BackendOutputDTO;
 import hu.kalee.skeleton.backend.model.BackendResult;
 import hu.kalee.skeleton.backend.model.ResultStatus;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.Date;
 
@@ -14,7 +14,7 @@ import java.util.Date;
  * @author Moondancer
  * @since 2015.12.30..
  */
-@Component
+@Service
 public class MockService {
     /**
      * Entry point of backend.

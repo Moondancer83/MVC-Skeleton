@@ -15,7 +15,7 @@
         <dependency>
             <groupId>hu.kalee</groupId>
             <artifactId>Backend-Skeleton</artifactId>
-            <version>${version}</version>
+            <version>${project.version}</version>
         </dependency>
 
         <dependency>
@@ -28,5 +28,4 @@
             <artifactId>dozer</artifactId>
         </dependency>
     </dependencies>
-
 </project>
