@@ -1,11 +1,13 @@
 package hu.kalee.skeleton.business.model;
 
+import hu.kalee.skeleton.backend.model.ResultStatus;
+
 import java.util.HashMap;
 import java.util.Map;
 
 /**
  * @author Moondancer
- * @since  2015.12.27..
+ * @since 2015.12.27..
  */
 public class BusinessResult {
     private ResultStatus status;
@@ -22,7 +24,7 @@ public class BusinessResult {
         return status;
     }
 
-    public void setStatus(ResultStatus status) {
+    public void setStatus(final ResultStatus status) {
         this.status = status;
     }
 
@@ -30,7 +32,7 @@ public class BusinessResult {
         return outputDTO;
     }
 
-    public void setOutputDTO(OutputDTO outputDTO) {
+    public void setOutputDTO(final OutputDTO outputDTO) {
         this.outputDTO = outputDTO;
     }
 
@@ -38,10 +40,11 @@ public class BusinessResult {
         return messages;
     }
 
-    public void setMessages(Map<String, String> messages) {
+    public void setMessages(final Map<String, String> messages) {
         this.messages = messages;
     }
-    public void addMessage(String key, String value) {
+
+    public void addMessage(final String key, final String value) {
         messages.put(key, value);
     }
 }

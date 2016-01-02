@@ -1,5 +1,7 @@
 package hu.kalee.skeleton.presentation.config;
 
+import hu.kalee.skeleton.backend.config.BackendAppConfig;
+import hu.kalee.skeleton.business.config.BusinessAppConfig;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 /**
@@ -16,7 +18,7 @@ public class ServletInitializer extends AbstractAnnotationConfigDispatcherServle
 
     @Override
     protected Class<?>[] getServletConfigClasses() {
-        return new Class<?>[]{AppConfig.class};
+        return new Class<?>[]{AppConfig.class, BusinessAppConfig.class, BackendAppConfig.class};
     }
 
     @Override

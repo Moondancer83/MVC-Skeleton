@@ -1,10 +1,15 @@
 package hu.kalee.skeleton.business.facade;
 
+import hu.kalee.skeleton.backend.model.BackendResult;
+import hu.kalee.skeleton.backend.model.ResultStatus;
+import hu.kalee.skeleton.backend.service.MockService;
+import hu.kalee.skeleton.business.converter.InputBusinessToBackendConverter;
+import hu.kalee.skeleton.business.converter.OutputBackendToBusinessConverter;
 import hu.kalee.skeleton.business.model.BusinessInputDTO;
-import hu.kalee.skeleton.business.model.BusinessOutputDTO;
 import hu.kalee.skeleton.business.model.BusinessResult;
-import hu.kalee.skeleton.business.model.ResultStatus;
 import org.springframework.stereotype.Service;
+
+import javax.inject.Inject;
 
 /**
  * @author Moondancer
@@ -12,45 +17,25 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class DefaultBusinessFacade implements BusinessFacade {
+    @Inject
+    private MockService service;
+    @Inject
+    private InputBusinessToBackendConverter toBackendConverter;
+    @Inject
+    private OutputBackendToBusinessConverter toBusinessConverter;
+
     @Override
-    public BusinessResult process(BusinessInputDTO input) {
-        BusinessResult result;
-        if ("0000".equals(input.getData())) {
-            result = getErrorResult();
-        } else if ("0001".equals(input.getData())) {
-            result = getWarningResult();
-        } else if ("0666".equals(input.getData())) {
-            throw new IllegalStateException("Something went wrong.");
-        } else {
-            result = getOkResult();
+    public BusinessResult process(final BusinessInputDTO input) {
+        BusinessResult result = new BusinessResult();
+        try {
+            BackendResult backendResult = service.call(toBackendConverter.convert(input));
+            result.setOutputDTO(toBusinessConverter.convert(backendResult.getDto()));
+            result.setStatus(backendResult.getStatus());
+            result.setMessages(backendResult.getMessages());
+        } catch (Exception e) {
+            result.setStatus(ResultStatus.ERROR);
+            result.addMessage("message", e.getMessage());
         }
-        return result;
-    }
-
-    private BusinessResult getWarningResult() {
-        BusinessResult result = new BusinessResult();
-        result.setStatus(ResultStatus.WARNING);
-        result.setOutputDTO(new BusinessOutputDTO());
-        result.addMessage("message", "Warning");
-        result.addMessage("warning", "No match found.");
-
-        return result;
-    }
-
-    private BusinessResult getErrorResult() {
-        BusinessResult result = new BusinessResult();
-        result.setStatus(ResultStatus.ERROR);
-        result.setOutputDTO(new BusinessOutputDTO());
-        result.addMessage("message", "System crash...");
-
-        return result;
-    }
-
-    private BusinessResult getOkResult() {
-        BusinessResult result = new BusinessResult();
-        result.setStatus(ResultStatus.OK);
-        result.setOutputDTO(new BusinessOutputDTO());
-        result.addMessage("message", "Success!");
 
         return result;
     }
