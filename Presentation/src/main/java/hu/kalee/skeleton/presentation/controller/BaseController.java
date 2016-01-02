@@ -1,5 +1,7 @@
 package hu.kalee.skeleton.presentation.controller;
 
+import hu.kalee.skeleton.backend.model.InputDTO;
+import hu.kalee.skeleton.backend.model.OutputDTO;
 import hu.kalee.skeleton.business.model.BusinessResult;
 import hu.kalee.skeleton.presentation.model.MessageHolder;
 import org.springframework.core.convert.converter.Converter;
@@ -17,7 +19,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
  * @param <C> Output DTO from business layer
  * @param <D> Output DTO for frontend usage
  */
-public abstract class BaseController<A extends MessageHolder, B, C, D> {
+public abstract class BaseController<A extends InputDTO & MessageHolder, B extends InputDTO, C extends OutputDTO, D extends OutputDTO> {
     public static final String REDIRECT_PREFIX = "redirect:/";
     public static final String ERROR_VIEW_NAME = "error";
 
