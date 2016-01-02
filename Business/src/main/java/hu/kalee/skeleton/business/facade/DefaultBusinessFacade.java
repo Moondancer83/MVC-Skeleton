@@ -22,7 +22,7 @@ public class DefaultBusinessFacade extends AbstractBusinessFacade<BusinessInputD
     private MockService service;
 
     @Inject
-    public DefaultBusinessFacade(Converter<BusinessInputDTO, BackendInputDTO> toBackendConverter, Converter<BackendOutputDTO, BusinessOutputDTO> toBusinessConverter) {
+    public DefaultBusinessFacade(final Converter<BusinessInputDTO, BackendInputDTO> toBackendConverter, final Converter<BackendOutputDTO, BusinessOutputDTO> toBusinessConverter) {
         super(toBackendConverter, toBusinessConverter);
     }
 
@@ -33,7 +33,7 @@ public class DefaultBusinessFacade extends AbstractBusinessFacade<BusinessInputD
      * @return The result
      */
     @Override
-    public BusinessResult form(BusinessInputDTO input) {
+    public BusinessResult form(final BusinessInputDTO input) {
         return super.process(input);
     }
 
@@ -44,7 +44,7 @@ public class DefaultBusinessFacade extends AbstractBusinessFacade<BusinessInputD
      * @return The backend result
      */
     @Override
-    BackendResult callService(BackendInputDTO backendInput) {
+    BackendResult callService(final BackendInputDTO backendInput) {
         return service.call(backendInput);
     }
 }
