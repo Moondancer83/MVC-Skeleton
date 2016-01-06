@@ -1,4 +1,4 @@
-package hu.kalee.skeleton.business.facade;
+package hu.kalee.skeleton.business.executor;
 
 import hu.kalee.skeleton.backend.model.BackendResult;
 import hu.kalee.skeleton.backend.model.InputDTO;
@@ -13,11 +13,11 @@ import org.springframework.core.convert.converter.Converter;
  * @author Moondancer
  * @since 2016.01.02..
  */
-public abstract class AbstractBusinessFacade<A extends InputDTO, B extends InputDTO, C extends OutputDTO, D extends OutputDTO> {
+public abstract class AbstractExecutor<A extends InputDTO, B extends InputDTO, C extends OutputDTO, D extends OutputDTO> {
     private Converter<A, B> toBackendConverter;
     private Converter<C, D> toBusinessConverter;
 
-    public AbstractBusinessFacade(final Converter<A, B> toBackendConverter, final Converter<C, D> toBusinessConverter) {
+    public AbstractExecutor(final Converter<A, B> toBackendConverter, final Converter<C, D> toBusinessConverter) {
         this.toBackendConverter = toBackendConverter;
         this.toBusinessConverter = toBusinessConverter;
     }
