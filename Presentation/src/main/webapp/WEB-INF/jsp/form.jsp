@@ -1,20 +1,10 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
-<html>
-<head>
-    <title>Form</title>
-    <style>
-        .error {
-            color: red;
-        }
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 
-        .warning {
-            color: orange;
-        }
-    </style>
-</head>
-<body>
+<tiles:insertDefinition name="defaultTemplate">
+    <tiles:putAttribute name="body">
+
     <form:form action="" method="post" commandName="form">
         <table border="0">
             <tr>
@@ -38,8 +28,7 @@
             </tr>
         </table>
     </form:form>
-<footer>
-    <p><a href="${pageContext.request.contextPath}/home">Back to Home</a> </p>
-</footer>
-</body>
-</html>
+
+    </tiles:putAttribute>
+</tiles:insertDefinition>
+
